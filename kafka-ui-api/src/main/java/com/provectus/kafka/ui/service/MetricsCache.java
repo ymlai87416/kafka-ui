@@ -5,6 +5,7 @@ import com.provectus.kafka.ui.model.InternalLogDirStats;
 import com.provectus.kafka.ui.model.KafkaCluster;
 import com.provectus.kafka.ui.model.ServerStatusDTO;
 import com.provectus.kafka.ui.util.JmxClusterUtil;
+import com.provectus.kafka.ui.util.PrometheusMetricsDTO;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ public class MetricsCache {
     InternalLogDirStats logDirInfo;
     Map<String, TopicDescription> topicDescriptions;
     Map<String, List<ConfigEntry>> topicConfigs;
+    PrometheusMetricsDTO prometheusMetricsDTO;
   }
 
   public static Metrics empty() {
@@ -47,6 +49,7 @@ public class MetricsCache {
         .logDirInfo(InternalLogDirStats.empty())
         .topicDescriptions(Map.of())
         .topicConfigs(Map.of())
+        .prometheusMetricsDTO(null)
         .build();
   }
 
