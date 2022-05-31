@@ -149,6 +149,7 @@
                                 </goals>
                                 <configuration>
                                     <nodeVersion>${node.version}</nodeVersion>
+                                    <pnpmVersion>${pnpm.version}</pnpmVersion>
                                 </configuration>
                             </execution>
                             <execution>
