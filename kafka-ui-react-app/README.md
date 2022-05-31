@@ -21,19 +21,19 @@ Go to react app folder
 cd ./kafka-ui-react-app
 ```
 
-Install Husky
+Install [pnpm](https://pnpm.io/installation)
 ```
-npm install -g husky
+npm install -g pnpm
 ```
 
 Install dependencies
 ```
-npm install
+pnpm install
 ```
 
 Generate API clients from OpenAPI document
 ```sh
-npm run gen:sources
+pnpm run gen:sources
 ```
 
 ## Start application
@@ -47,7 +47,7 @@ DEV_PROXY= https://api.server # your API server
 
 Run the application
 ```sh
-npm start
+pnpm start
 ```
 
 ### Docker way
@@ -63,9 +63,8 @@ Make sure that none of the `.env*` files contain `DEV_PROXY` variable
 
 Run the application
 ```sh
-npm start
+pnpm start
 ```
 ## Links
 
-* [Bulma](https://bulma.io/documentation/) - free, open source CSS framework based on Flexbox
 * [Create React App](https://github.com/facebook/create-react-app)
