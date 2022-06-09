@@ -16,7 +16,7 @@ const defaultContextValue: ContextProps = {
   isLive: false,
   seekDirection: SeekDirection.FORWARD,
   searchParams: new URLSearchParams(''),
-  changeSeekDirection: jest.fn(),
+  changeSeekDirection: vi.fn(),
 };
 
 const renderComponent = (
@@ -28,11 +28,11 @@ const renderComponent = (
       <Filters
         meta={{}}
         isFetching={false}
-        addMessage={jest.fn()}
-        resetMessages={jest.fn()}
-        updatePhase={jest.fn()}
-        updateMeta={jest.fn()}
-        setIsFetching={jest.fn()}
+        addMessage={vi.fn()}
+        resetMessages={vi.fn()}
+        updatePhase={vi.fn()}
+        updateMeta={vi.fn()}
+        setIsFetching={vi.fn()}
         {...props}
       />
     </TopicMessagesContext.Provider>

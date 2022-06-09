@@ -1,22 +1,19 @@
 import React from 'react';
 import { connectors } from 'redux/reducers/connect/__test__/fixtures';
 import ListItem, { ListItemProps } from 'components/Connect/List/ListItem';
-import ConfirmationModal from 'components/common/ConfirmationModal/ConfirmationModal';
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { render } from 'lib/testHelpers';
 
-const mockDeleteConnector = jest.fn(() => ({ type: 'test' }));
+const mockDeleteConnector = vi.fn(() => ({ type: 'test' }));
 
-jest.mock('redux/reducers/connect/connectSlice', () => ({
-  ...jest.requireActual('redux/reducers/connect/connectSlice'),
+vi.mock('redux/reducers/connect/connectSlice', () => ({
+  ...vi.importActual('redux/reducers/connect/connectSlice'),
   deleteConnector: () => mockDeleteConnector,
 }));
 
-jest.mock(
-  'components/common/ConfirmationModal/ConfirmationModal',
-  () => 'mock-ConfirmationModal'
-);
+vi.mock('components/common/ConfirmationModal/ConfirmationModal', () => ({
+  default: () => 'mock-ConfirmationModal',
+}));
 
 describe('Connectors ListItem', () => {
   const connector = connectors[0];
@@ -26,25 +23,6 @@ describe('Connectors ListItem', () => {
         <ListItem clusterName="local" connector={connector} {...props} />
       </tbody>
     </table>
-  );
-
-  const onCancel = jest.fn();
-  const onConfirm = jest.fn();
-  const confirmationModal = (props: Partial<ListItemProps> = {}) => (
-    <ConfirmationModal onCancel={onCancel} onConfirm={onConfirm}>
-      <button type="button" id="cancel" onClick={onCancel}>
-        Cancel
-      </button>
-      {props.clusterName ? (
-        <button type="button" id="delete" onClick={onConfirm}>
-          Confirm
-        </button>
-      ) : (
-        <button type="button" id="delete">
-          Confirm
-        </button>
-      )}
-    </ConfirmationModal>
   );
 
   it('renders item', () => {
@@ -82,23 +60,5 @@ describe('Connectors ListItem', () => {
       })
     );
     expect(screen.getAllByRole('cell')[6]).toHaveTextContent('');
-  });
-
-  it('handles cancel', async () => {
-    render(confirmationModal());
-    userEvent.click(screen.getByText('Cancel'));
-    expect(onCancel).toHaveBeenCalled();
-  });
-
-  it('handles delete', () => {
-    render(confirmationModal({ clusterName: 'test' }));
-    userEvent.click(screen.getByText('Confirm'));
-    expect(onConfirm).toHaveBeenCalled();
-  });
-
-  it('handles delete when clusterName is not present', () => {
-    render(confirmationModal({ clusterName: undefined }));
-    userEvent.click(screen.getByText('Confirm'));
-    expect(onConfirm).toHaveBeenCalledTimes(0);
   });
 });

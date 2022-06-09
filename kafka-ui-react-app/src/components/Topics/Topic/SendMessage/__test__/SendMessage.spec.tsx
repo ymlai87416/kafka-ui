@@ -11,30 +11,27 @@ import {
 import { store } from 'redux/store';
 import { fetchTopicDetails } from 'redux/reducers/topics/topicsSlice';
 import { externalTopicPayload } from 'redux/reducers/topics/__test__/fixtures';
-import validateMessage from 'components/Topics/Topic/SendMessage/validateMessage';
 import Alerts from 'components/Alerts/Alerts';
 import * as S from 'components/App.styled';
 
 import { testSchema } from './fixtures';
 
-import Mock = jest.Mock;
-
-jest.mock('json-schema-faker', () => ({
+vi.mock('json-schema-faker', () => ({
   generate: () => ({
     f1: -93251214,
     schema: 'enim sit in fugiat dolor',
     f2: 'deserunt culpa sunt',
   }),
-  option: jest.fn(),
+  option: vi.fn(),
 }));
 
-jest.mock('components/Topics/Topic/SendMessage/validateMessage', () =>
-  jest.fn()
-);
+vi.mock('components/Topics/Topic/SendMessage/validateMessage', () => ({
+  default: vi.fn(),
+}));
 
-const mockNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', () => ({
+  ...vi.importActual('react-router-dom'),
   useNavigate: () => mockNavigate,
 }));
 
@@ -70,7 +67,12 @@ const renderAndSubmitData = async (error: string[] = []) => {
     userEvent.click(screen.getAllByRole('option')[1]);
   });
   await act(() => {
-    (validateMessage as Mock).mockImplementation(() => error);
+    vi.mock('components/Topics/Topic/SendMessage/validateMessage', () => ({
+      default: () => error,
+    }));
+    vi.mock('components/Topics/Topic/SendMessage/validateMessage', () =>
+      vi.fn()
+    );
     userEvent.click(screen.getByText('Send'));
   });
 };

@@ -4,11 +4,11 @@ import { render } from 'lib/testHelpers';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 
-const onClick = jest.fn();
+const onClick = vi.fn();
 
 describe('DropdownItem', () => {
   it('to be in the document', () => {
-    render(<DropdownItem onClick={jest.fn()}>Item 1</DropdownItem>);
+    render(<DropdownItem onClick={vi.fn()}>Item 1</DropdownItem>);
     expect(screen.getByText('Item 1')).toBeInTheDocument();
   });
 

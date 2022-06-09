@@ -9,21 +9,32 @@ import { connects, connector } from 'redux/reducers/connect/__test__/fixtures';
 import { fireEvent, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ControllerRenderProps } from 'react-hook-form';
-import * as redux from 'react-redux';
 
-jest.mock('components/common/PageLoader/PageLoader', () => 'mock-PageLoader');
-jest.mock(
-  'components/common/Editor/Editor',
-  () => (props: ControllerRenderProps) => {
-    return <textarea {...props} placeholder="json" />;
-  }
-);
-
-const mockHistoryPush = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockHistoryPush,
+vi.mock('components/common/PageLoader/PageLoader', () => ({
+  default: () => 'mock-PageLoader',
 }));
+vi.mock('components/common/Editor/Editor', () => ({
+  default: (props: ControllerRenderProps) => {
+    return <textarea {...props} placeholder="json" />;
+  },
+}));
+
+const mockHistoryPush = vi.fn();
+vi.mock('react-router-dom', async () => {
+  const actual: Record<string, string> = await vi.importActual(
+    'react-router-dom'
+  );
+  return { ...actual, useNavigate: () => mockHistoryPush };
+});
+
+const useDispatchMock = vi.fn(() => ({
+  unwrap: () => ({ connector }),
+}));
+
+vi.mock('redux', async () => {
+  const actual: Record<string, string> = await vi.importActual('redux');
+  return { ...actual, useDispatch: useDispatchMock };
+});
 
 describe('New', () => {
   const clusterName = 'my-cluster';
@@ -51,7 +62,7 @@ describe('New', () => {
     render(
       <WithRoute path={clusterConnectorNewPath()}>
         <New
-          fetchConnects={jest.fn()}
+          fetchConnects={vi.fn()}
           areConnectsFetching={false}
           connects={connects}
           {...props}
@@ -61,7 +72,7 @@ describe('New', () => {
     );
 
   it('fetches connects on mount', async () => {
-    const fetchConnects = jest.fn();
+    const fetchConnects = vi.fn();
     await act(() => {
       renderComponent({ fetchConnects });
     });
@@ -70,15 +81,8 @@ describe('New', () => {
   });
 
   it('calls createConnector on form submit', async () => {
-    const useDispatchSpy = jest.spyOn(redux, 'useDispatch');
-    const useDispatchMock = jest.fn(() => ({
-      unwrap: () => ({ connector }),
-    })) as jest.Mock;
-    useDispatchSpy.mockReturnValue(useDispatchMock);
-
     renderComponent();
     await simulateFormSubmit();
-
     expect(useDispatchMock).toHaveBeenCalledTimes(1);
   });
 
@@ -88,13 +92,6 @@ describe('New', () => {
       connects[0].name,
       connector.name
     );
-
-    const useDispatchSpy = jest.spyOn(redux, 'useDispatch');
-    const useDispatchMock = jest.fn(() => ({
-      unwrap: () => ({ connector }),
-    })) as jest.Mock;
-    useDispatchSpy.mockReturnValue(useDispatchMock);
-
     renderComponent();
 
     await simulateFormSubmit();
@@ -103,12 +100,15 @@ describe('New', () => {
   });
 
   it('does not redirect to connector details view on unsuccessful submit', async () => {
-    const useDispatchSpy = jest.spyOn(redux, 'useDispatch');
-    const useDispatchMock = jest.fn(async () => ({
-      unwrap: () => ({}),
-    })) as jest.Mock;
-    useDispatchSpy.mockReturnValue(useDispatchMock);
-
+    vi.mock('redux', async () => {
+      const actual: Record<string, string> = await vi.importActual('redux');
+      return {
+        ...actual,
+        useDispatch: vi.fn(async () => ({
+          unwrap: () => ({}),
+        })),
+      };
+    });
     renderComponent();
     await simulateFormSubmit();
     expect(mockHistoryPush).not.toHaveBeenCalled();

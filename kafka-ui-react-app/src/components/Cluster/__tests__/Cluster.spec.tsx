@@ -26,24 +26,24 @@ const CLusterCompText = {
   KsqlDb: 'KsqlDb',
 };
 
-jest.mock('components/Topics/Topics', () => () => (
-  <div>{CLusterCompText.Topics}</div>
-));
-jest.mock('components/Schemas/Schemas', () => () => (
-  <div>{CLusterCompText.Schemas}</div>
-));
-jest.mock('components/Connect/Connect', () => () => (
-  <div>{CLusterCompText.Connect}</div>
-));
-jest.mock('components/Brokers/Brokers', () => () => (
-  <div>{CLusterCompText.Brokers}</div>
-));
-jest.mock('components/ConsumerGroups/ConsumerGroups', () => () => (
-  <div>{CLusterCompText.ConsumerGroups}</div>
-));
-jest.mock('components/KsqlDb/KsqlDb', () => () => (
-  <div>{CLusterCompText.KsqlDb}</div>
-));
+vi.mock('components/Topics/Topics', () => ({
+  default: () => <div>{CLusterCompText.Topics}</div>,
+}));
+vi.mock('components/Schemas/Schemas', () => ({
+  default: () => <div>{CLusterCompText.Schemas}</div>,
+}));
+vi.mock('components/Connect/Connect', () => ({
+  default: () => <div>{CLusterCompText.Connect}</div>,
+}));
+vi.mock('components/Brokers/Brokers', () => ({
+  default: () => <div>{CLusterCompText.Brokers}</div>,
+}));
+vi.mock('components/ConsumerGroups/ConsumerGroups', () => ({
+  default: () => <div>{CLusterCompText.ConsumerGroups}</div>,
+}));
+vi.mock('components/KsqlDb/KsqlDb', () => ({
+  default: () => <div>{CLusterCompText.KsqlDb}</div>,
+}));
 
 describe('Cluster', () => {
   const renderComponent = (pathname: string) => {

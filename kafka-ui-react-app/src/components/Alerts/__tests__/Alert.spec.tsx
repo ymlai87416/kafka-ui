@@ -8,7 +8,7 @@ import { render } from 'lib/testHelpers';
 const id = 'test-id';
 const title = 'My Alert Title';
 const message = 'My Alert Message';
-const dismiss = jest.fn();
+const dismiss = vi.fn();
 
 describe('Alert', () => {
   const setupComponent = (props: Partial<AlertProps> = {}) =>

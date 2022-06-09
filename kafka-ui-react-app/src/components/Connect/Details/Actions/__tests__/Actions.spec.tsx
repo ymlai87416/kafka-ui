@@ -12,19 +12,16 @@ import ConfirmationModal, {
   ConfirmationModalProps,
 } from 'components/common/ConfirmationModal/ConfirmationModal';
 
-const mockHistoryPush = jest.fn();
-const deleteConnector = jest.fn();
-const cancelMock = jest.fn();
+const mockHistoryPush = vi.fn();
+const deleteConnector = vi.fn();
+const cancelMock = vi.fn();
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockHistoryPush,
-}));
-
-jest.mock(
-  'components/common/ConfirmationModal/ConfirmationModal',
-  () => 'mock-ConfirmationModal'
-);
+vi.mock('react-router-dom', async () => {
+  const actual: Record<string, string> = await vi.importActual(
+    'react-router-dom'
+  );
+  return { ...actual, useNavigate: () => mockHistoryPush };
+});
 
 const expectActionButtonsExists = () => {
   expect(screen.getByText('Restart Connector')).toBeInTheDocument();
@@ -44,13 +41,13 @@ describe('Actions', () => {
   const actionsContainer = (props: Partial<ActionsProps> = {}) => (
     <ActionsContainer>
       <Actions
-        deleteConnector={jest.fn()}
+        deleteConnector={vi.fn()}
         isConnectorDeleting={false}
         connectorStatus={ConnectorState.RUNNING}
-        restartConnector={jest.fn()}
-        restartTasks={jest.fn()}
-        pauseConnector={jest.fn()}
-        resumeConnector={jest.fn()}
+        restartConnector={vi.fn()}
+        restartTasks={vi.fn()}
+        pauseConnector={vi.fn()}
+        resumeConnector={vi.fn()}
         isConnectorActionRunning={false}
         {...props}
       />
@@ -96,13 +93,13 @@ describe('Actions', () => {
     const component = (props: Partial<ActionsProps> = {}) => (
       <WithRoute path={pathname}>
         <Actions
-          deleteConnector={jest.fn()}
+          deleteConnector={vi.fn()}
           isConnectorDeleting={false}
           connectorStatus={ConnectorState.RUNNING}
-          restartConnector={jest.fn()}
-          restartTasks={jest.fn()}
-          pauseConnector={jest.fn()}
-          resumeConnector={jest.fn()}
+          restartConnector={vi.fn()}
+          restartTasks={vi.fn()}
+          pauseConnector={vi.fn()}
+          resumeConnector={vi.fn()}
           isConnectorActionRunning={false}
           {...props}
         />
@@ -216,7 +213,7 @@ describe('Actions', () => {
     });
 
     it('calls restartConnector when restart button clicked', () => {
-      const restartConnector = jest.fn();
+      const restartConnector = vi.fn();
       render(component({ restartConnector }), {
         initialEntries: [
           clusterConnectConnectorPath(clusterName, connectName, connectorName),
@@ -234,7 +231,7 @@ describe('Actions', () => {
     });
 
     it('calls pauseConnector when pause button clicked', () => {
-      const pauseConnector = jest.fn();
+      const pauseConnector = vi.fn();
       render(
         component({
           connectorStatus: ConnectorState.RUNNING,
@@ -260,7 +257,7 @@ describe('Actions', () => {
     });
 
     it('calls resumeConnector when resume button clicked', () => {
-      const resumeConnector = jest.fn();
+      const resumeConnector = vi.fn();
       render(
         component({
           connectorStatus: ConnectorState.PAUSED,

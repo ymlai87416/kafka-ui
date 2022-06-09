@@ -22,8 +22,8 @@ const renderComponent = (props?: Partial<Props>) =>
         defaultReplicationFactor={defaultReplicationFactor}
         partitionsCountIncreased={false}
         replicationFactorUpdated={false}
-        updateTopicPartitionsCount={jest.fn()}
-        updateTopicReplicationFactor={jest.fn()}
+        updateTopicPartitionsCount={vi.fn()}
+        updateTopicReplicationFactor={vi.fn()}
         {...props}
       />
     </WithRoute>,
@@ -79,7 +79,7 @@ describe('DangerZone', () => {
   });
 
   it('calls updateTopicPartitionsCount', async () => {
-    const mockUpdateTopicPartitionsCount = jest.fn();
+    const mockUpdateTopicPartitionsCount = vi.fn();
     renderComponent({
       updateTopicPartitionsCount: mockUpdateTopicPartitionsCount,
     });
@@ -100,7 +100,7 @@ describe('DangerZone', () => {
   });
 
   it('calls updateTopicReplicationFactor', async () => {
-    const mockUpdateTopicReplicationFactor = jest.fn();
+    const mockUpdateTopicReplicationFactor = vi.fn();
     renderComponent({
       updateTopicReplicationFactor: mockUpdateTopicReplicationFactor,
     });
@@ -205,8 +205,8 @@ describe('DangerZone', () => {
         defaultReplicationFactor={defaultReplicationFactor}
         partitionsCountIncreased
         replicationFactorUpdated={false}
-        updateTopicPartitionsCount={jest.fn()}
-        updateTopicReplicationFactor={jest.fn()}
+        updateTopicPartitionsCount={vi.fn()}
+        updateTopicReplicationFactor={vi.fn()}
       />
     );
     await waitFor(() =>
@@ -232,8 +232,8 @@ describe('DangerZone', () => {
         defaultReplicationFactor={defaultReplicationFactor}
         partitionsCountIncreased={false}
         replicationFactorUpdated
-        updateTopicPartitionsCount={jest.fn()}
-        updateTopicReplicationFactor={jest.fn()}
+        updateTopicPartitionsCount={vi.fn()}
+        updateTopicReplicationFactor={vi.fn()}
       />
     );
     await waitFor(() =>

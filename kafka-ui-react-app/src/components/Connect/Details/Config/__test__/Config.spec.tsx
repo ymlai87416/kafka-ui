@@ -5,7 +5,9 @@ import Config, { ConfigProps } from 'components/Connect/Details/Config/Config';
 import { connector } from 'redux/reducers/connect/__test__/fixtures';
 import { screen } from '@testing-library/dom';
 
-jest.mock('components/common/Editor/Editor', () => 'mock-Editor');
+vi.mock('components/common/Editor/Editor', () => ({
+  default: () => 'mock-Editor',
+}));
 
 describe('Config', () => {
   const pathname = clusterConnectConnectorConfigPath();
@@ -16,7 +18,7 @@ describe('Config', () => {
   const component = (props: Partial<ConfigProps> = {}) => (
     <WithRoute path={pathname}>
       <Config
-        fetchConfig={jest.fn()}
+        fetchConfig={vi.fn()}
         isConfigFetching={false}
         config={connector.config}
         {...props}
@@ -51,7 +53,7 @@ describe('Config', () => {
   });
 
   it('fetches config on mount', () => {
-    const fetchConfig = jest.fn();
+    const fetchConfig = vi.fn();
     render(component({ fetchConfig }), {
       initialEntries: [
         clusterConnectConnectorConfigPath(

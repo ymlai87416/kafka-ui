@@ -12,8 +12,8 @@ const SPACE_KEY = ' ';
 
 const testTitle = 'test title';
 const testPreviewText = 'test preview text';
-const handleOrderBy = jest.fn();
-const onPreview = jest.fn();
+const handleOrderBy = vi.fn();
+const onPreview = vi.fn();
 
 const sortIconTitle = 'Sort icon';
 
@@ -125,7 +125,7 @@ describe('TableHeaderCell', () => {
       orderBy: TopicColumnsToSort.NAME,
       orderValue: TopicColumnsToSort.NAME,
       sortOrder: SortOrder.ASC,
-      handleOrderBy: jest.fn(),
+      handleOrderBy: vi.fn(),
     });
     const title = within(getColumnHeader()).getByText(testTitle);
     expect(title).toHaveStyle(`color: ${theme.table.th.color.active};`);
@@ -136,7 +136,7 @@ describe('TableHeaderCell', () => {
       title: testTitle,
       orderBy: TopicColumnsToSort.NAME,
       orderValue: TopicColumnsToSort.OUT_OF_SYNC_REPLICAS,
-      handleOrderBy: jest.fn(),
+      handleOrderBy: vi.fn(),
     });
     const title = within(getColumnHeader()).getByText(testTitle);
     expect(title).toHaveStyle(`color: ${theme.table.th.color.normal}`);

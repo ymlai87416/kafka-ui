@@ -12,9 +12,9 @@ describe('QueryForm', () => {
     renderComponent({
       fetching: false,
       hasResults: false,
-      handleClearResults: jest.fn(),
-      handleSSECancel: jest.fn(),
-      submitHandler: jest.fn(),
+      handleClearResults: vi.fn(),
+      handleSSECancel: vi.fn(),
+      submitHandler: vi.fn(),
     });
 
     const KSQLBlock = screen.getByLabelText('KSQL');
@@ -57,12 +57,12 @@ describe('QueryForm', () => {
   });
 
   it('renders error with empty input', async () => {
-    const submitFn = jest.fn();
+    const submitFn = vi.fn();
     renderComponent({
       fetching: false,
       hasResults: false,
-      handleClearResults: jest.fn(),
-      handleSSECancel: jest.fn(),
+      handleClearResults: vi.fn(),
+      handleSSECancel: vi.fn(),
       submitHandler: submitFn,
     });
 
@@ -77,9 +77,9 @@ describe('QueryForm', () => {
     renderComponent({
       fetching: false,
       hasResults: false,
-      handleClearResults: jest.fn(),
-      handleSSECancel: jest.fn(),
-      submitHandler: jest.fn(),
+      handleClearResults: vi.fn(),
+      handleSSECancel: vi.fn(),
+      submitHandler: vi.fn(),
     });
 
     await act(() => {
@@ -104,9 +104,9 @@ describe('QueryForm', () => {
     renderComponent({
       fetching: false,
       hasResults: false,
-      handleClearResults: jest.fn(),
-      handleSSECancel: jest.fn(),
-      submitHandler: jest.fn(),
+      handleClearResults: vi.fn(),
+      handleSSECancel: vi.fn(),
+      submitHandler: vi.fn(),
     });
 
     await act(() => {
@@ -124,12 +124,12 @@ describe('QueryForm', () => {
   });
 
   it('submits with correct inputs', async () => {
-    const submitFn = jest.fn();
+    const submitFn = vi.fn();
     renderComponent({
       fetching: false,
       hasResults: false,
-      handleClearResults: jest.fn(),
-      handleSSECancel: jest.fn(),
+      handleClearResults: vi.fn(),
+      handleSSECancel: vi.fn(),
       submitHandler: submitFn,
     });
 
@@ -161,13 +161,13 @@ describe('QueryForm', () => {
   });
 
   it('clear results is enabled when has results', async () => {
-    const clearFn = jest.fn();
+    const clearFn = vi.fn();
     renderComponent({
       fetching: false,
       hasResults: true,
       handleClearResults: clearFn,
-      handleSSECancel: jest.fn(),
-      submitHandler: jest.fn(),
+      handleSSECancel: vi.fn(),
+      submitHandler: vi.fn(),
     });
 
     expect(screen.getByRole('button', { name: 'Clear results' })).toBeEnabled();
@@ -180,13 +180,13 @@ describe('QueryForm', () => {
   });
 
   it('stop query query is enabled when is fetching', async () => {
-    const cancelFn = jest.fn();
+    const cancelFn = vi.fn();
     renderComponent({
       fetching: true,
       hasResults: false,
-      handleClearResults: jest.fn(),
+      handleClearResults: vi.fn(),
       handleSSECancel: cancelFn,
-      submitHandler: jest.fn(),
+      submitHandler: vi.fn(),
     });
 
     expect(screen.getByRole('button', { name: 'Stop query' })).toBeEnabled();
@@ -199,12 +199,12 @@ describe('QueryForm', () => {
   });
 
   it('submits form with ctrl+enter on KSQL editor', async () => {
-    const submitFn = jest.fn();
+    const submitFn = vi.fn();
     renderComponent({
       fetching: false,
       hasResults: false,
-      handleClearResults: jest.fn(),
-      handleSSECancel: jest.fn(),
+      handleClearResults: vi.fn(),
+      handleSSECancel: vi.fn(),
       submitHandler: submitFn,
     });
 
@@ -224,12 +224,12 @@ describe('QueryForm', () => {
   });
 
   it('submits form with ctrl+enter on streamProperties editor', async () => {
-    const submitFn = jest.fn();
+    const submitFn = vi.fn();
     renderComponent({
       fetching: false,
       hasResults: false,
-      handleClearResults: jest.fn(),
-      handleSSECancel: jest.fn(),
+      handleClearResults: vi.fn(),
+      handleSSECancel: vi.fn(),
       submitHandler: submitFn,
     });
 
@@ -261,9 +261,9 @@ describe('QueryForm', () => {
     renderComponent({
       fetching: false,
       hasResults: false,
-      handleClearResults: jest.fn(),
-      handleSSECancel: jest.fn(),
-      submitHandler: jest.fn(),
+      handleClearResults: vi.fn(),
+      handleSSECancel: vi.fn(),
+      submitHandler: vi.fn(),
     });
 
     await act(() => {
@@ -285,9 +285,9 @@ describe('QueryForm', () => {
     renderComponent({
       fetching: false,
       hasResults: false,
-      handleClearResults: jest.fn(),
-      handleSSECancel: jest.fn(),
-      submitHandler: jest.fn(),
+      handleClearResults: vi.fn(),
+      handleSSECancel: vi.fn(),
+      submitHandler: vi.fn(),
     });
 
     await act(() => {

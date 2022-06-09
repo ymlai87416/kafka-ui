@@ -21,8 +21,8 @@ const selectOption = async (listbox: HTMLElement, option: string) => {
 };
 
 describe('CustomParamsField', () => {
-  const remove = jest.fn();
-  const setExistingFields = jest.fn();
+  const remove = vi.fn();
+  const setExistingFields = vi.fn();
 
   const setupComponent = (props: Props) => {
     const Wrapper: React.FC<PropsWithChildren<unknown>> = ({ children }) => {

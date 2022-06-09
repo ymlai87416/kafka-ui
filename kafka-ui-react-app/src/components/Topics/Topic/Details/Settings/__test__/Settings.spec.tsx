@@ -13,7 +13,7 @@ describe('Settings', () => {
   const mockTopicName = 'Topic_Name';
 
   let expectedResult: number;
-  const mockFn = jest.fn();
+  const mockFn = vi.fn();
 
   const mockConfig: TopicConfig[] = [
     {

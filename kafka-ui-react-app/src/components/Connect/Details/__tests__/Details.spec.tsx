@@ -17,21 +17,21 @@ const DetailsCompText = {
   actions: 'ActionsContainer',
 };
 
-jest.mock('components/Connect/Details/Overview/OverviewContainer', () => () => (
-  <div>{DetailsCompText.overview}</div>
-));
+vi.mock('components/Connect/Details/Overview/OverviewContainer', () => ({
+  default: () => <div>{DetailsCompText.overview}</div>,
+}));
 
-jest.mock('components/Connect/Details/Tasks/TasksContainer', () => () => (
-  <div>{DetailsCompText.tasks}</div>
-));
+vi.mock('components/Connect/Details/Tasks/TasksContainer', () => ({
+  default: () => <div>{DetailsCompText.tasks}</div>,
+}));
 
-jest.mock('components/Connect/Details/Config/ConfigContainer', () => () => (
-  <div>{DetailsCompText.config}</div>
-));
+vi.mock('components/Connect/Details/Config/ConfigContainer', () => ({
+  default: () => <div>{DetailsCompText.config}</div>,
+}));
 
-jest.mock('components/Connect/Details/Actions/ActionsContainer', () => () => (
-  <div>{DetailsCompText.actions}</div>
-));
+vi.mock('components/Connect/Details/Actions/ActionsContainer', () => ({
+  default: () => <div>{DetailsCompText.actions}</div>,
+}));
 
 describe('Details', () => {
   const clusterName = 'my-cluster';
@@ -50,8 +50,8 @@ describe('Details', () => {
     render(
       <WithRoute path={getNonExactPath(clusterConnectConnectorPath())}>
         <Details
-          fetchConnector={jest.fn()}
-          fetchTasks={jest.fn()}
+          fetchConnector={vi.fn()}
+          fetchTasks={vi.fn()}
           isConnectorFetching={false}
           areTasksFetching={false}
           connector={connector}
@@ -82,7 +82,7 @@ describe('Details', () => {
   });
 
   it('fetches connector on mount', () => {
-    const fetchConnector = jest.fn();
+    const fetchConnector = vi.fn();
     setupWrapper({ fetchConnector });
     expect(fetchConnector).toHaveBeenCalledTimes(1);
     expect(fetchConnector).toHaveBeenCalledWith({
@@ -93,7 +93,7 @@ describe('Details', () => {
   });
 
   it('fetches tasks on mount', () => {
-    const fetchTasks = jest.fn();
+    const fetchTasks = vi.fn();
     setupWrapper({ fetchTasks });
     expect(fetchTasks).toHaveBeenCalledTimes(1);
     expect(fetchTasks).toHaveBeenCalledWith({

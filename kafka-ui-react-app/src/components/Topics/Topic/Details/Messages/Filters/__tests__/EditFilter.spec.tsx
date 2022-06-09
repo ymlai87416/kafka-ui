@@ -15,8 +15,8 @@ const editFilter: FilterEdit = {
 const renderComponent = (props?: Partial<EditFilterProps>) =>
   render(
     <EditFilter
-      toggleEditModal={jest.fn()}
-      editSavedFilter={jest.fn()}
+      toggleEditModal={vi.fn()}
+      editSavedFilter={vi.fn()}
       editFilter={editFilter}
       {...props}
     />
@@ -31,7 +31,7 @@ describe('EditFilter component', () => {
   });
 
   it('closes editFilter modal', async () => {
-    const toggleEditModal = jest.fn();
+    const toggleEditModal = vi.fn();
     await act(() => {
       renderComponent({ toggleEditModal });
     });
@@ -40,8 +40,8 @@ describe('EditFilter component', () => {
   });
 
   it('save edited fields and close modal', async () => {
-    const toggleEditModal = jest.fn();
-    const editSavedFilter = jest.fn();
+    const toggleEditModal = vi.fn();
+    const editSavedFilter = vi.fn();
 
     await act(() => {
       renderComponent({ toggleEditModal, editSavedFilter });

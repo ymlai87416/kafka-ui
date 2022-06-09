@@ -29,18 +29,18 @@ const SchemaCompText = {
   Edit: 'Edit',
 };
 
-jest.mock('components/Schemas/List/List', () => () => (
-  <div>{SchemaCompText.List}</div>
-));
-jest.mock('components/Schemas/Details/Details', () => () => (
-  <div>{SchemaCompText.Details}</div>
-));
-jest.mock('components/Schemas/New/New', () => () => (
-  <div>{SchemaCompText.New}</div>
-));
-jest.mock('components/Schemas/Edit/Edit', () => () => (
-  <div>{SchemaCompText.Edit}</div>
-));
+vi.mock('components/Schemas/List/List', () => ({
+  default: () => <div>{SchemaCompText.List}</div>,
+}));
+vi.mock('components/Schemas/Details/Details', () => ({
+  default: () => <div>{SchemaCompText.Details}</div>,
+}));
+vi.mock('components/Schemas/New/New', () => ({
+  default: () => <div>{SchemaCompText.New}</div>,
+}));
+vi.mock('components/Schemas/Edit/Edit', () => ({
+  default: () => <div>{SchemaCompText.Edit}</div>,
+}));
 
 describe('Schemas', () => {
   beforeEach(() => {

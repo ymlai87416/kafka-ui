@@ -12,12 +12,12 @@ const filters: MessageFilters[] = [{ name: 'name', code: 'code' }];
 const renderComponent = (props?: Partial<FilterModalProps>) =>
   render(
     <FilterModal
-      toggleIsOpen={jest.fn()}
+      toggleIsOpen={vi.fn()}
       filters={filters}
-      addFilter={jest.fn()}
-      deleteFilter={jest.fn()}
-      activeFilterHandler={jest.fn()}
-      editSavedFilter={jest.fn()}
+      addFilter={vi.fn()}
+      deleteFilter={vi.fn()}
+      activeFilterHandler={vi.fn()}
+      editSavedFilter={vi.fn()}
       {...props}
     />
   );

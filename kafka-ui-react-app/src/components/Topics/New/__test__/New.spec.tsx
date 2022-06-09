@@ -24,9 +24,9 @@ const topicName = 'test-topic';
 const initialState: Partial<RootState> = {};
 const storeMock = mockStore(initialState);
 
-const mockNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', () => ({
+  ...vi.importActual('react-router-dom'),
   useNavigate: () => mockNavigate,
 }));
 
@@ -93,10 +93,10 @@ describe('New', () => {
   });
 
   it('submits valid form', async () => {
-    const useDispatchSpy = jest.spyOn(redux, 'useDispatch');
-    const useDispatchMock = jest.fn(() => ({
+    const useDispatchSpy = vi.spyOn(redux, 'useDispatch');
+    const useDispatchMock = vi.fn(() => ({
       meta: { requestStatus: 'fulfilled' },
-    })) as jest.Mock;
+    }));
     useDispatchSpy.mockReturnValue(useDispatchMock);
 
     await act(() => renderComponent(clusterTopicNewPath(clusterName)));
@@ -110,10 +110,10 @@ describe('New', () => {
   });
 
   it('does not redirect page when request is not fulfilled', async () => {
-    const useDispatchSpy = jest.spyOn(redux, 'useDispatch');
-    const useDispatchMock = jest.fn(() => ({
+    const useDispatchSpy = vi.spyOn(redux, 'useDispatch');
+    const useDispatchMock = vi.fn(() => ({
       meta: { requestStatus: 'pending' },
-    })) as jest.Mock;
+    }));
 
     useDispatchSpy.mockReturnValue(useDispatchMock);
     await act(() => renderComponent(clusterTopicNewPath(clusterName)));
@@ -125,8 +125,8 @@ describe('New', () => {
   });
 
   it('submits valid form that result in an error', async () => {
-    const useDispatchSpy = jest.spyOn(redux, 'useDispatch');
-    const useDispatchMock = jest.fn();
+    const useDispatchSpy = vi.spyOn(redux, 'useDispatch');
+    const useDispatchMock = vi.fn();
     useDispatchSpy.mockReturnValue(useDispatchMock);
 
     await act(() => renderComponent(clusterTopicNewPath(clusterName)));

@@ -7,9 +7,9 @@ import { render } from 'lib/testHelpers';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-jest.mock('react-hook-form', () => ({
+vi.mock('react-hook-form', () => ({
   useFormContext: () => ({
-    register: jest.fn(),
+    register: vi.fn(),
   }),
 }));
 

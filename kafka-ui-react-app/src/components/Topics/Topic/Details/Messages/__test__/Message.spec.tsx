@@ -10,14 +10,15 @@ import userEvent from '@testing-library/user-event';
 
 const messageContentText = 'messageContentText';
 
-jest.mock(
+vi.mock(
   'components/Topics/Topic/Details/Messages/MessageContent/MessageContent',
-  () => () =>
-    (
+  () => ({
+    default: () => (
       <tr>
         <td>{messageContentText}</td>
       </tr>
-    )
+    ),
+  })
 );
 
 describe('Message component', () => {
@@ -82,7 +83,7 @@ describe('Message component', () => {
     expect(screen.queryByText(text)).not.toBeInTheDocument();
   });
 
-  it('should check open Message Content functionality', () => {
+  it.only('should check open Message Content functionality', () => {
     renderComponent();
     const messageToggleIcon = screen.getByRole('button', { hidden: true });
     expect(screen.queryByText(messageContentText)).not.toBeInTheDocument();

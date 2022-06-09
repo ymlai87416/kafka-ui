@@ -6,7 +6,7 @@ import InfoModal from 'components/Topics/Topic/Details/Messages/Filters/InfoModa
 
 describe('InfoModal component', () => {
   it('closes InfoModal', () => {
-    const toggleInfoModal = jest.fn();
+    const toggleInfoModal = vi.fn();
     render(<InfoModal toggleIsOpen={toggleInfoModal} />);
     userEvent.click(screen.getByRole('button', { name: 'Ok' }));
     expect(toggleInfoModal).toHaveBeenCalledTimes(1);

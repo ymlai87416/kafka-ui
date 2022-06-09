@@ -6,9 +6,9 @@ import { render } from 'lib/testHelpers';
 const setupWrapper = (props?: Partial<InputProps>) => (
   <Input name="test" {...props} />
 );
-jest.mock('react-hook-form', () => ({
+vi.mock('react-hook-form', () => ({
   useFormContext: () => ({
-    register: jest.fn(),
+    register: vi.fn(),
   }),
 }));
 describe('Custom Input', () => {

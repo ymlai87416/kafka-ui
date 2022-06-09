@@ -13,12 +13,12 @@ const KSqLComponentText = {
   query: 'query',
 };
 
-jest.mock('components/KsqlDb/List/List', () => () => (
-  <div>{KSqLComponentText.list}</div>
-));
-jest.mock('components/KsqlDb/Query/Query', () => () => (
-  <div>{KSqLComponentText.query}</div>
-));
+vi.mock('components/KsqlDb/List/List', () => ({
+  default: () => <div>{KSqLComponentText.list}</div>,
+}));
+vi.mock('components/KsqlDb/Query/Query', () => ({
+  default: () => <div>{KSqLComponentText.query}</div>,
+}));
 
 describe('KsqlDb Component', () => {
   const clusterName = 'clusterName';

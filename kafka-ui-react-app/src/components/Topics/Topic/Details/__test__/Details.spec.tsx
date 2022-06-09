@@ -11,17 +11,19 @@ import { render, WithRoute } from 'lib/testHelpers';
 import { clusterTopicEditRelativePath, clusterTopicPath } from 'lib/paths';
 import { CleanUpPolicy, Topic } from 'generated-sources';
 
-const mockNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockNavigate,
-}));
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', async () => {
+  const actual: Record<string, string> = await vi.importActual(
+    'react-router-dom'
+  );
+  return { ...actual, useNavigate: () => mockNavigate };
+});
 
 describe('Details', () => {
-  const mockDelete = jest.fn();
+  const mockDelete = vi.fn();
   const mockClusterName = 'local';
-  const mockClearTopicMessages = jest.fn();
-  const mockRecreateTopic = jest.fn();
+  const mockClearTopicMessages = vi.fn();
+  const mockRecreateTopic = vi.fn();
 
   const topic: Topic = {
     ...internalTopicPayload,

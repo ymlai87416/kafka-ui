@@ -9,13 +9,13 @@ import { connector } from 'redux/reducers/connect/__test__/fixtures';
 import { waitFor } from '@testing-library/dom';
 import { act, fireEvent, screen } from '@testing-library/react';
 
-jest.mock('components/common/PageLoader/PageLoader', () => 'mock-PageLoader');
+vi.mock('components/common/PageLoader/PageLoader', () => 'mock-PageLoader');
 
-jest.mock('components/common/Editor/Editor', () => 'mock-Editor');
+vi.mock('components/common/Editor/Editor', () => 'mock-Editor');
 
-const mockHistoryPush = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+const mockHistoryPush = vi.fn();
+vi.mock('react-router-dom', () => ({
+  ...vi.importActual('react-router-dom'),
   useNavigate: () => mockHistoryPush,
 }));
 
@@ -29,10 +29,10 @@ describe('Edit', () => {
     render(
       <WithRoute path={pathname}>
         <Edit
-          fetchConfig={jest.fn()}
+          fetchConfig={vi.fn()}
           isConfigFetching={false}
           config={connector.config}
-          updateConfig={jest.fn()}
+          updateConfig={vi.fn()}
           {...props}
         />
       </WithRoute>,
@@ -48,7 +48,7 @@ describe('Edit', () => {
     );
 
   it('fetches config on mount', async () => {
-    const fetchConfig = jest.fn();
+    const fetchConfig = vi.fn();
     await waitFor(() => renderComponent({ fetchConfig }));
     expect(fetchConfig).toHaveBeenCalledTimes(1);
     expect(fetchConfig).toHaveBeenCalledWith({
@@ -59,7 +59,7 @@ describe('Edit', () => {
   });
 
   it('calls updateConfig on form submit', async () => {
-    const updateConfig = jest.fn();
+    const updateConfig = vi.fn();
     await waitFor(() => renderComponent({ updateConfig }));
     fireEvent.submit(screen.getByRole('form'));
     await waitFor(() => expect(updateConfig).toHaveBeenCalledTimes(1));
@@ -72,7 +72,7 @@ describe('Edit', () => {
   });
 
   it('redirects to connector config view on successful submit', async () => {
-    const updateConfig = jest.fn().mockResolvedValueOnce(connector);
+    const updateConfig = vi.fn().mockResolvedValueOnce(connector);
     await waitFor(() => renderComponent({ updateConfig }));
     fireEvent.submit(screen.getByRole('form'));
 
@@ -83,7 +83,7 @@ describe('Edit', () => {
   });
 
   it('does not redirect to connector config view on unsuccessful submit', async () => {
-    const updateConfig = jest.fn().mockResolvedValueOnce(undefined);
+    const updateConfig = vi.fn().mockResolvedValueOnce(undefined);
     await waitFor(() => renderComponent({ updateConfig }));
     await act(() => {
       fireEvent.submit(screen.getByRole('form'));

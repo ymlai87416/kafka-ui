@@ -11,7 +11,7 @@ describe('yup extended', () => {
     });
 
     it('returns false on parsing error', () => {
-      JSON.parse = jest.fn().mockImplementationOnce(() => {
+      JSON.parse = vi.fn().mockImplementationOnce(() => {
         throw new Error();
       });
       expect(isValidJsonObject('{ "foo": "bar" }')).toBeFalsy();

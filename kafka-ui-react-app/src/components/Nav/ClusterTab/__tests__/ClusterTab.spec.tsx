@@ -8,7 +8,7 @@ import React from 'react';
 import { render } from 'lib/testHelpers';
 
 const testClusterName = 'My-Huge-Cluster';
-const toggleClusterMenuMock = jest.fn();
+const toggleClusterMenuMock = vi.fn();
 
 describe('ClusterTab component', () => {
   const setupWrapper = (props?: Partial<ClusterTabProps>) => (

@@ -12,7 +12,7 @@ const pathname = clusterConnectConnectorTasksPath();
 const clusterName = 'my-cluster';
 const connectName = 'my-connect';
 const connectorName = 'my-connector';
-const restartTask = jest.fn();
+const restartTask = vi.fn();
 const task = tasks[0];
 
 const renderComponent = (props: ListItemProps = { task, restartTask }) => {

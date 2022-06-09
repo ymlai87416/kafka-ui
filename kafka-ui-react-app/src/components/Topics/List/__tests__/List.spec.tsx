@@ -9,10 +9,11 @@ import { externalTopicPayload } from 'redux/reducers/topics/__test__/fixtures';
 import { CleanUpPolicy, SortOrder } from 'generated-sources';
 import userEvent from '@testing-library/user-event';
 import { clusterTopicsPath } from 'lib/paths';
+import { MockedFunction } from 'vitest';
 
-const mockNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', () => ({
+  ...vi.importActual('react-router-dom'),
   useNavigate: () => mockNavigate,
 }));
 
@@ -26,17 +27,17 @@ describe('List', () => {
       areTopicsFetching={false}
       topics={[]}
       totalPages={1}
-      fetchTopicsList={jest.fn()}
-      deleteTopic={jest.fn()}
-      deleteTopics={jest.fn()}
-      clearTopicsMessages={jest.fn()}
-      clearTopicMessages={jest.fn()}
-      recreateTopic={jest.fn()}
+      fetchTopicsList={vi.fn()}
+      deleteTopic={vi.fn()}
+      deleteTopics={vi.fn()}
+      clearTopicsMessages={vi.fn()}
+      clearTopicMessages={vi.fn()}
+      recreateTopic={vi.fn()}
       search=""
       orderBy={null}
       sortOrder={SortOrder.ASC}
-      setTopicsSearch={jest.fn()}
-      setTopicsOrderBy={jest.fn()}
+      setTopicsSearch={vi.fn()}
+      setTopicsOrderBy={vi.fn()}
       {...props}
     />
   );
@@ -71,9 +72,9 @@ describe('List', () => {
   });
 
   describe('when it does not have readonly flag', () => {
-    const fetchTopicsList = jest.fn();
+    const fetchTopicsList = vi.fn();
 
-    jest.useFakeTimers();
+    vi.useFakeTimers();
 
     afterEach(() => {
       fetchTopicsList.mockClear();
@@ -85,7 +86,7 @@ describe('List', () => {
     });
 
     it('calls setTopicsSearch on input', async () => {
-      const setTopicsSearch = jest.fn();
+      const setTopicsSearch = vi.fn();
       renderComponentWithProviders({}, { setTopicsSearch });
       const query = 'topic';
       const searchElement = screen.getByPlaceholderText('Search by Topic Name');
@@ -173,14 +174,14 @@ describe('List', () => {
   });
 
   describe('when some list items are selected', () => {
-    const mockDeleteTopics = jest.fn();
-    const mockDeleteTopic = jest.fn();
-    const mockClearTopic = jest.fn();
-    const mockClearTopicsMessages = jest.fn();
-    const mockRecreate = jest.fn();
-    const fetchTopicsList = jest.fn();
+    const mockDeleteTopics = vi.fn();
+    const mockDeleteTopic = vi.fn();
+    const mockClearTopic = vi.fn();
+    const mockClearTopicsMessages = vi.fn();
+    const mockRecreate = vi.fn();
+    const fetchTopicsList = vi.fn();
 
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const pathname = clusterTopicsPath('local');
 
     beforeEach(() => {
@@ -346,7 +347,7 @@ describe('List', () => {
       userEvent.click(actionBtn);
 
       let textBtn;
-      let mock: jest.Mock;
+      let mock: MockedFunction<any>;
 
       if (action === 'clearTopicsMessages') {
         textBtn = 'Clear Messages';

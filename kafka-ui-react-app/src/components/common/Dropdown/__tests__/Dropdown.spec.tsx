@@ -9,10 +9,10 @@ import { screen } from '@testing-library/react';
 const dummyLable = 'My Test Label';
 const dummyChildren = (
   <>
-    <DropdownItem onClick={jest.fn()}>Child 1</DropdownItem>
-    <DropdownItem onClick={jest.fn()}>Child 2</DropdownItem>
+    <DropdownItem onClick={vi.fn()}>Child 1</DropdownItem>
+    <DropdownItem onClick={vi.fn()}>Child 2</DropdownItem>
     <DropdownDivider />
-    <DropdownItem onClick={jest.fn()}>Child 3</DropdownItem>
+    <DropdownItem onClick={vi.fn()}>Child 3</DropdownItem>
   </>
 );
 

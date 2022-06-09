@@ -17,11 +17,11 @@ describe('SavedFilter Component', () => {
     return render(
       <SavedFilters
         filters={props.filters || mockFilters}
-        onEdit={props.onEdit || jest.fn()}
-        closeModal={props.closeModal || jest.fn()}
-        onGoBack={props.onGoBack || jest.fn()}
-        activeFilterHandler={props.activeFilterHandler || jest.fn()}
-        deleteFilter={props.deleteFilter || jest.fn()}
+        onEdit={props.onEdit || vi.fn()}
+        closeModal={props.closeModal || vi.fn()}
+        onGoBack={props.onGoBack || vi.fn()}
+        activeFilterHandler={props.activeFilterHandler || vi.fn()}
+        deleteFilter={props.deleteFilter || vi.fn()}
       />
     );
   };
@@ -29,14 +29,14 @@ describe('SavedFilter Component', () => {
   const getSavedFilters = () => screen.getAllByRole('savedFilter');
 
   it('should check the Cancel button click', () => {
-    const cancelMock = jest.fn();
+    const cancelMock = vi.fn();
     setUpComponent({ closeModal: cancelMock });
     userEvent.click(screen.getByText(/cancel/i));
     expect(cancelMock).toHaveBeenCalled();
   });
 
   it('should check on go back button click', () => {
-    const onGoBackMock = jest.fn();
+    const onGoBackMock = vi.fn();
     setUpComponent({ onGoBack: onGoBackMock });
     userEvent.click(screen.getByText(/back to custom filters/i));
     expect(onGoBackMock).toHaveBeenCalled();
@@ -53,9 +53,9 @@ describe('SavedFilter Component', () => {
   });
 
   describe('Saved Filters Deleting Editing', () => {
-    const onEditMock = jest.fn();
-    const activeFilterMock = jest.fn();
-    const cancelMock = jest.fn();
+    const onEditMock = vi.fn();
+    const activeFilterMock = vi.fn();
+    const cancelMock = vi.fn();
 
     beforeEach(() => {
       setUpComponent({
@@ -104,7 +104,7 @@ describe('SavedFilter Component', () => {
   });
 
   describe('Saved Filters Deletion', () => {
-    const deleteMock = jest.fn();
+    const deleteMock = vi.fn();
 
     beforeEach(() => {
       setUpComponent({ deleteFilter: deleteMock });

@@ -21,7 +21,7 @@ describe('List', () => {
         consumerGroups={consumerGroups || []}
         orderBy={orderBy || ConsumerGroupOrdering.NAME}
         sortOrder={sortOrder || SortOrder.ASC}
-        setConsumerGroupsSortOrderBy={setConsumerGroupsSortOrderBy || jest.fn()}
+        setConsumerGroupsSortOrderBy={setConsumerGroupsSortOrderBy || vi.fn()}
         totalPages={totalPages || 1}
         isFetched={'isFetched' in props ? !!props.isFetched : true}
       />
@@ -52,8 +52,8 @@ describe('List', () => {
   });
 
   describe('consumerGroups are fetched with custom parameters', () => {
-    it('should test the order by functionality of another element', async () => {
-      const sortOrder = jest.fn();
+    it('should test the order by functionality of another element', () => {
+      const sortOrder = vi.fn();
       setUpComponent({
         consumerGroups: consumerGroupMock,
         setConsumerGroupsSortOrderBy: sortOrder,

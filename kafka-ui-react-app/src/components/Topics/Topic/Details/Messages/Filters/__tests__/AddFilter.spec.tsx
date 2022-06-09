@@ -12,16 +12,16 @@ const filters: MessageFilters[] = [
   { name: 'name2', code: 'code2' },
 ];
 
-const editFilterMock = jest.fn();
+const editFilterMock = vi.fn();
 
 const renderComponent = (props: Partial<FilterModalProps> = {}) =>
   render(
     <AddFilter
-      toggleIsOpen={jest.fn()}
-      addFilter={jest.fn()}
-      deleteFilter={jest.fn()}
-      activeFilterHandler={jest.fn()}
-      toggleEditModal={jest.fn()}
+      toggleIsOpen={vi.fn()}
+      addFilter={vi.fn()}
+      deleteFilter={vi.fn()}
+      activeFilterHandler={vi.fn()}
+      toggleEditModal={vi.fn()}
       editFilter={editFilterMock}
       filters={props.filters || filters}
       {...props}
@@ -126,9 +126,9 @@ describe('AddFilter component', () => {
   });
 
   describe('onSubmit with Filter being saved', () => {
-    const addFilterMock = jest.fn();
-    const activeFilterHandlerMock = jest.fn();
-    const toggleModelMock = jest.fn();
+    const addFilterMock = vi.fn();
+    const activeFilterHandlerMock = vi.fn();
+    const toggleModelMock = vi.fn();
 
     const codeValue = 'filter code';
     const longCodeValue = 'a long filter code';

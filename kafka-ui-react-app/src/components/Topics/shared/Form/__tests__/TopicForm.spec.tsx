@@ -6,7 +6,7 @@ import TopicForm, { Props } from 'components/Topics/shared/Form/TopicForm';
 import userEvent from '@testing-library/user-event';
 
 const isSubmitting = false;
-const onSubmit = jest.fn();
+const onSubmit = vi.fn();
 
 const renderComponent = (props: Props = { isSubmitting, onSubmit }) => {
   const Wrapper: React.FC<PropsWithChildren<unknown>> = ({ children }) => {

@@ -7,10 +7,12 @@ import Brokers from 'components/Brokers/Brokers';
 const brokersList = 'brokersList';
 const broker = 'brokers';
 
-jest.mock('components/Brokers/BrokersList/BrokersList', () => () => (
-  <div>{brokersList}</div>
-));
-jest.mock('components/Brokers/Broker/Broker', () => () => <div>{broker}</div>);
+vi.mock('components/Brokers/BrokersList/BrokersList', () => ({
+  default: () => <div>{brokersList}</div>,
+}));
+vi.mock('components/Brokers/Broker/Broker', () => ({
+  default: () => <div>{broker}</div>,
+}));
 
 describe('Brokers Component', () => {
   const clusterName = 'clusterName';

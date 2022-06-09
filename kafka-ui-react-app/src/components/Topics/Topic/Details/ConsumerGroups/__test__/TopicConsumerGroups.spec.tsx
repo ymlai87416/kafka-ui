@@ -48,7 +48,7 @@ describe('TopicConsumerGroups', () => {
     return render(
       <WithRoute path={clusterTopicConsumerGroupsPath()}>
         <TopicConsumerGroups
-          fetchTopicConsumerGroups={jest.fn()}
+          fetchTopicConsumerGroups={vi.fn()}
           isFetched={false}
           {...props}
         />

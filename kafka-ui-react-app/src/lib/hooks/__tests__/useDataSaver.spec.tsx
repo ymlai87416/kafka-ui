@@ -9,17 +9,17 @@ describe('useDataSaver hook', () => {
 
   describe('Save as file', () => {
     beforeAll(() => {
-      jest.useFakeTimers('modern');
-      jest.setSystemTime(new Date('Wed Mar 24 2021 03:19:56 GMT-0700'));
+      vi.useFakeTimers();
+      vi.setSystemTime(new Date('Wed Mar 24 2021 03:19:56 GMT-0700'));
     });
 
-    afterAll(() => jest.useRealTimers());
+    afterAll(() => vi.useRealTimers());
 
     it('downloads json file', () => {
       const link: HTMLAnchorElement = document.createElement('a');
-      link.click = jest.fn();
+      link.click = vi.fn();
 
-      const mockCreate = jest
+      const mockCreate = vi
         .spyOn(document, 'createElement')
         .mockImplementation(() => link);
 
@@ -44,9 +44,9 @@ describe('useDataSaver hook', () => {
 
     it('downloads txt file', () => {
       const link: HTMLAnchorElement = document.createElement('a');
-      link.click = jest.fn();
+      link.click = vi.fn();
 
-      const mockCreate = jest
+      const mockCreate = vi
         .spyOn(document, 'createElement')
         .mockImplementation(() => link);
 
@@ -73,10 +73,10 @@ describe('useDataSaver hook', () => {
   describe('copies the data to the clipboard', () => {
     Object.assign(navigator, {
       clipboard: {
-        writeText: jest.fn(),
+        writeText: vi.fn(),
       },
     });
-    jest.spyOn(navigator.clipboard, 'writeText');
+    vi.spyOn(navigator.clipboard, 'writeText');
 
     it('data with type Object', () => {
       const HookWrapper: React.FC = () => {

@@ -6,8 +6,8 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render } from 'lib/testHelpers';
 
-const confirmMock = jest.fn();
-const cancelMock = jest.fn();
+const confirmMock = vi.fn();
+const cancelMock = vi.fn();
 const body = 'Please Confirm the action!';
 
 describe('ConfirmationModal', () => {

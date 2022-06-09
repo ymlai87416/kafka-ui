@@ -23,9 +23,9 @@ describe('Connectors List', () => {
   });
 
   describe('View', () => {
-    const fetchConnects = jest.fn();
-    const fetchConnectors = jest.fn();
-    const setConnectorSearch = jest.fn();
+    const fetchConnects = vi.fn();
+    const fetchConnectors = vi.fn();
+    const setConnectorSearch = vi.fn();
     const renderComponent = (
       props: Partial<ListProps> = {},
       contextValue: ContextProps = initialValue
@@ -48,6 +48,10 @@ describe('Connectors List', () => {
         </ClusterContext.Provider>
       );
     };
+
+    beforeEach(() => {
+      vi.resetAllMocks();
+    });
 
     it('renders PageLoader', async () => {
       await act(() => renderComponent({ areConnectorsFetching: true }));

@@ -3,9 +3,11 @@ import Dashboard from 'components/Dashboard/Dashboard';
 import { render } from 'lib/testHelpers';
 import { screen } from '@testing-library/dom';
 
-jest.mock(
+vi.mock(
   'components/Dashboard/ClustersWidget/ClustersWidgetContainer.ts',
-  () => () => <div>mock-ClustersWidgetContainer</div>
+  () => ({
+    default: () => <div>mock-ClustersWidgetContainer</div>,
+  })
 );
 
 describe('Dashboard', () => {

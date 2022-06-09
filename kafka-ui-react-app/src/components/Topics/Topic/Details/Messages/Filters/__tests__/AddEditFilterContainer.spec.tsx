@@ -20,7 +20,7 @@ describe('AddEditFilterContainer component', () => {
   ) => {
     render(
       <AddEditFilterContainer
-        cancelBtnHandler={jest.fn()}
+        cancelBtnHandler={vi.fn()}
         submitBtnText={props.submitBtnText || defaultSubmitBtn}
         {...props}
       />
@@ -92,7 +92,7 @@ describe('AddEditFilterContainer component', () => {
     });
 
     it('should test whether the cancel callback is being called', async () => {
-      const cancelCallback = jest.fn();
+      const cancelCallback = vi.fn();
       renderComponent({
         cancelBtnHandler: cancelCallback,
       });
@@ -103,7 +103,7 @@ describe('AddEditFilterContainer component', () => {
     });
 
     it('should test whether the submit Callback is being called', async () => {
-      const submitCallback = jest.fn();
+      const submitCallback = vi.fn();
       renderComponent({
         submitCallback,
       });

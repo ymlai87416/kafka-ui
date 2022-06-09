@@ -4,12 +4,12 @@ import { render } from 'lib/testHelpers';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 
-jest.mock('use-debounce', () => ({
+vi.mock('use-debounce', () => ({
   useDebouncedCallback: (fn: (e: Event) => void) => fn,
 }));
 
 describe('Search', () => {
-  const handleSearch = jest.fn();
+  const handleSearch = vi.fn();
   it('calls handleSearch on input', () => {
     render(
       <Search

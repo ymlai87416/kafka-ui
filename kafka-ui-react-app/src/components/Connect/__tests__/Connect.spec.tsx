@@ -19,18 +19,18 @@ const ConnectCompText = {
   edit: 'EditContainer',
 };
 
-jest.mock('components/Connect/New/NewContainer', () => () => (
-  <div>{ConnectCompText.new}</div>
-));
-jest.mock('components/Connect/List/ListContainer', () => () => (
-  <div>{ConnectCompText.list}</div>
-));
-jest.mock('components/Connect/Details/DetailsContainer', () => () => (
-  <div>{ConnectCompText.details}</div>
-));
-jest.mock('components/Connect/Edit/EditContainer', () => () => (
-  <div>{ConnectCompText.edit}</div>
-));
+vi.mock('components/Connect/New/NewContainer', () => ({
+  default: () => <div>{ConnectCompText.new}</div>,
+}));
+vi.mock('components/Connect/List/ListContainer', () => ({
+  default: () => <div>{ConnectCompText.list}</div>,
+}));
+vi.mock('components/Connect/Details/DetailsContainer', () => ({
+  default: () => <div>{ConnectCompText.details}</div>,
+}));
+vi.mock('components/Connect/Edit/EditContainer', () => ({
+  default: () => <div>{ConnectCompText.edit}</div>,
+}));
 
 describe('Connect', () => {
   const renderComponent = (pathname: string, routePath: string) =>

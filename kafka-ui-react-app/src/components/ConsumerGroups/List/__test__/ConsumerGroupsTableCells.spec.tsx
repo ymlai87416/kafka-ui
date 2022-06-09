@@ -22,11 +22,11 @@ describe('Consumer Groups Table Cells', () => {
   const mockTableState: TableState<ConsumerGroup, string, never> = {
     data: [consumerGroup],
     selectedIds: new Set([]),
-    idSelector: jest.fn(),
-    isRowSelectable: jest.fn(),
+    idSelector: vi.fn(),
+    isRowSelectable: vi.fn(),
     selectedCount: 0,
-    setRowsSelection: jest.fn(),
-    toggleSelection: jest.fn(),
+    setRowsSelection: vi.fn(),
+    toggleSelection: vi.fn(),
   };
 
   describe('StatusCell', () => {

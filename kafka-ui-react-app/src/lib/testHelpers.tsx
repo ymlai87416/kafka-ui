@@ -96,10 +96,10 @@ export class EventSourceMock {
 
   constructor(url: string) {
     this.url = url;
-    this.open = jest.fn();
-    this.error = jest.fn();
-    this.onmessage = jest.fn();
-    this.close = jest.fn();
+    this.open = vi.fn();
+    this.error = vi.fn();
+    this.onmessage = vi.fn();
+    this.close = vi.fn();
   }
 }
 

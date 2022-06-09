@@ -9,11 +9,13 @@ import { getTopicStateFixtures } from 'redux/reducers/topics/__test__/fixtures';
 
 import { topicName, clusterName, topicWithInfo } from './fixtures';
 
-const mockNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockNavigate,
-}));
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', async () => {
+  const actual: Record<string, string> = await vi.importActual(
+    'react-router-dom'
+  );
+  return { ...actual, useNavigate: () => mockNavigate };
+});
 
 const renderComponent = (
   props: Partial<Props> = {},
@@ -32,8 +34,8 @@ const renderComponent = (
       <Edit
         isFetched
         isTopicUpdated={false}
-        fetchTopicConfig={jest.fn()}
-        updateTopic={jest.fn()}
+        fetchTopicConfig={vi.fn()}
+        updateTopic={vi.fn()}
         {...props}
       />
     </WithRoute>,
@@ -112,7 +114,7 @@ describe('Edit Component', () => {
 
   describe('Submit Case of the Edit Component', () => {
     it('should check the submit functionality when topic updated is false', async () => {
-      const updateTopicMock = jest.fn();
+      const updateTopicMock = vi.fn();
 
       renderComponent({ updateTopic: updateTopicMock }, undefined);
 
@@ -131,7 +133,7 @@ describe('Edit Component', () => {
     });
 
     it('should check the submit functionality when topic updated is true', async () => {
-      const updateTopicMock = jest.fn();
+      const updateTopicMock = vi.fn();
 
       renderComponent(
         { updateTopic: updateTopicMock, isTopicUpdated: true },

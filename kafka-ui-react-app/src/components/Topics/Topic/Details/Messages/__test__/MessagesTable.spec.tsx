@@ -13,11 +13,13 @@ import {
 
 const mockTopicsMessages: TopicMessage[] = [{ ...topicMessagePayload }];
 
-const mockNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockNavigate,
-}));
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', async () => {
+  const actual: Record<string, string> = await vi.importActual(
+    'react-router-dom'
+  );
+  return { ...actual, useNavigate: () => mockNavigate };
+});
 
 describe('MessagesTable', () => {
   const seekToResult = '&seekTo=0::9';
@@ -27,7 +29,7 @@ describe('MessagesTable', () => {
     isLive: false,
     seekDirection: SeekDirection.FORWARD,
     searchParams,
-    changeSeekDirection: jest.fn(),
+    changeSeekDirection: vi.fn(),
   };
 
   const setUpComponent = (

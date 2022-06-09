@@ -14,15 +14,15 @@ const listContainer = 'listContainer';
 const topicContainer = 'topicContainer';
 const newCopyContainer = 'newCopyContainer';
 
-jest.mock('components/Topics/List/ListContainer', () => () => (
-  <div>{listContainer}</div>
-));
-jest.mock('components/Topics/Topic/TopicContainer', () => () => (
-  <div>{topicContainer}</div>
-));
-jest.mock('components/Topics/New/New', () => () => (
-  <div>{newCopyContainer}</div>
-));
+vi.mock('components/Topics/List/ListContainer', () => ({
+  default: () => <div>{listContainer}</div>,
+}));
+vi.mock('components/Topics/Topic/TopicContainer', () => ({
+  default: () => <div>{topicContainer}</div>,
+}));
+vi.mock('components/Topics/New/New', () => ({
+  default: () => <div>{newCopyContainer}</div>,
+}));
 
 describe('Topics Component', () => {
   const clusterName = 'clusterName';

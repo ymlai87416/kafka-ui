@@ -16,22 +16,22 @@ const topicText = {
   loading: 'Loading',
 };
 
-jest.mock('components/Topics/Topic/Edit/EditContainer', () => () => (
-  <div>{topicText.edit}</div>
-));
-jest.mock('components/Topics/Topic/SendMessage/SendMessage', () => () => (
-  <div>{topicText.send}</div>
-));
-jest.mock('components/Topics/Topic/Details/DetailsContainer', () => () => (
-  <div>{topicText.detail}</div>
-));
-jest.mock('components/common/PageLoader/PageLoader', () => () => (
-  <div>{topicText.loading}</div>
-));
+vi.mock('components/Topics/Topic/Edit/EditContainer', () => ({
+  default: () => <div>{topicText.edit}</div>,
+}));
+vi.mock('components/Topics/Topic/SendMessage/SendMessage', () => ({
+  default: () => <div>{topicText.send}</div>,
+}));
+vi.mock('components/Topics/Topic/Details/DetailsContainer', () => ({
+  default: () => <div>{topicText.detail}</div>,
+}));
+vi.mock('components/common/PageLoader/PageLoader', () => ({
+  default: () => <div>{topicText.loading}</div>,
+}));
 
 describe('Topic Component', () => {
-  const resetTopicMessages = jest.fn();
-  const fetchTopicDetailsMock = jest.fn();
+  const resetTopicMessages = vi.fn();
+  const fetchTopicDetailsMock = vi.fn();
 
   const renderComponent = (pathname: string, topicFetching: boolean) =>
     render(

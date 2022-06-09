@@ -371,9 +371,7 @@ describe('topics Slice', () => {
     const RealDate = Date.now;
 
     beforeAll(() => {
-      global.Date.now = jest.fn(() =>
-        new Date('2019-04-07T10:20:30Z').getTime()
-      );
+      global.Date.now = vi.fn(() => new Date('2019-04-07T10:20:30Z').getTime());
     });
     afterAll(() => {
       global.Date.now = RealDate;

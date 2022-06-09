@@ -49,7 +49,7 @@ describe('Overview', () => {
     return render(
       <WithRoute path={clusterTopicPath()}>
         <ClusterContext.Provider value={contextValues}>
-          <Overview clearTopicMessages={jest.fn()} {...props} />
+          <Overview clearTopicMessages={vi.fn()} {...props} />
         </ClusterContext.Provider>
       </WithRoute>,
       {
@@ -129,7 +129,7 @@ describe('Overview', () => {
 
   describe('when Clear Messages is clicked', () => {
     it('should when Clear Messages is clicked', () => {
-      const mockClearTopicMessages = jest.fn();
+      const mockClearTopicMessages = vi.fn();
       setupComponent(
         { clearTopicMessages: mockClearTopicMessages },
         {

@@ -6,7 +6,7 @@ import Tasks, { TasksProps } from 'components/Connect/Details/Tasks/Tasks';
 import { tasks } from 'redux/reducers/connect/__test__/fixtures';
 import { screen } from '@testing-library/dom';
 
-jest.mock(
+vi.mock(
   'components/Connect/Details/Tasks/ListItem/ListItemContainer',
   () => 'tr'
 );

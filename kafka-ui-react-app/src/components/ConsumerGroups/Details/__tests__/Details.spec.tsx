@@ -18,11 +18,13 @@ import { act } from '@testing-library/react';
 const clusterName = 'cluster1';
 const { groupId } = consumerGroupPayload;
 
-const mockNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockNavigate,
-}));
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', async () => {
+  const actual: Record<string, string> = await vi.importActual(
+    'react-router-dom'
+  );
+  return { ...actual, useNavigate: () => mockNavigate };
+});
 
 const renderComponent = () => {
   render(

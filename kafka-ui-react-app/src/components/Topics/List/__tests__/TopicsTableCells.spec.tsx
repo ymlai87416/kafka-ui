@@ -14,11 +14,11 @@ describe('TopicsTableCells Components', () => {
   const mockTableState: TableState<Topic, string, never> = {
     data: topicsPayload,
     selectedIds: new Set([]),
-    idSelector: jest.fn(),
-    isRowSelectable: jest.fn(),
+    idSelector: vi.fn(),
+    isRowSelectable: vi.fn(),
     selectedCount: 0,
-    setRowsSelection: jest.fn(),
-    toggleSelection: jest.fn(),
+    setRowsSelection: vi.fn(),
+    toggleSelection: vi.fn(),
   };
 
   describe('TitleCell Component', () => {

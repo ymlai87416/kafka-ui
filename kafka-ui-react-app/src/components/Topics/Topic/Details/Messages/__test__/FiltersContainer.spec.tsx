@@ -3,10 +3,9 @@ import FiltersContainer from 'components/Topics/Topic/Details/Messages/Filters/F
 import { screen } from '@testing-library/react';
 import { render } from 'lib/testHelpers';
 
-jest.mock(
-  'components/Topics/Topic/Details/Messages/Filters/Filters',
-  () => () => <div>mock-Filters</div>
-);
+vi.mock('components/Topics/Topic/Details/Messages/Filters/Filters', () => ({
+  default: () => <div>mock-Filters</div>,
+}));
 
 describe('FiltersContainer', () => {
   it('renders Filters component', () => {
