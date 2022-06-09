@@ -46,7 +46,7 @@
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
       "eslint --fix",
-      "npm test -- --bail --findRelatedTests --watchAll=false"
+      "npm test --changed"
     ]
   },
   "scripts": {
@@ -56,7 +56,7 @@
     "lint": "eslint --ext .tsx,.ts src/",
     "lint:fix": "eslint --ext .tsx,.ts src/ --fix",
     "lint:CI": "eslint --ext .tsx,.ts src/ --max-warnings=0",
-    "test": "vitest watch",
+    "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
     "test:CI": "CI=true npm run test:coverage --ci --testResultsProcessor=\"jest-sonar-reporter\"",
@@ -80,15 +80,14 @@
     ]
   },
   "devDependencies": {
-    "@jest/types": "^28.1.0",
     "@openapitools/openapi-generator-cli": "^2.5.1",
     "@testing-library/dom": "^8.11.1",
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/user-event": "^13.5.0",
+    "@testing-library/user-event": "^14.2.0",
     "@types/eventsource": "^1.1.8",
-    "@types/jest": "^27.5.1",
     "@types/lodash": "^4.14.172",
     "@types/node": "^16.4.13",
+    "@types/node-fetch": "^2.6.1",
     "@types/react": "^18.0.9",
     "@types/react-datepicker": "^4.1.4",
     "@types/react-dom": "^18.0.3",
@@ -99,7 +98,6 @@
     "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.27.0",
-    "@vitest/ui": "^0.14.1",
     "c8": "^7.11.3",
     "dotenv": "^16.0.1",
     "eslint": "^8.15.0",
@@ -107,12 +105,10 @@
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest-dom": "^4.0.2",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0",
-    "fetch-mock-jest": "^1.5.1",
     "husky": "^7.0.1",
     "jest-sonar-reporter": "^2.0.0",
     "jest-styled-components": "^7.0.8",
@@ -121,7 +117,6 @@
     "prettier": "^2.3.1",
     "redux-mock-store": "^1.5.4",
     "rimraf": "^3.0.2",
-    "ts-jest": "^28.0.3",
     "ts-node": "^10.8.0",
     "typescript": "^4.3.5",
     "vitest": "^0.14.1"

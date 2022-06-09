@@ -83,7 +83,7 @@ describe('Message component', () => {
     expect(screen.queryByText(text)).not.toBeInTheDocument();
   });
 
-  it.only('should check open Message Content functionality', () => {
+  it('should check open Message Content functionality', () => {
     renderComponent();
     const messageToggleIcon = screen.getByRole('button', { hidden: true });
     expect(screen.queryByText(messageContentText)).not.toBeInTheDocument();

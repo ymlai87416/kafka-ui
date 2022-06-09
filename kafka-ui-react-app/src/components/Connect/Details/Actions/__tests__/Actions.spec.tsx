@@ -1,6 +1,7 @@
+import { describe, it } from 'vitest';
 import React from 'react';
 import { render, WithRoute } from 'lib/testHelpers';
-import { clusterConnectConnectorPath, clusterConnectorsPath } from 'lib/paths';
+import { clusterConnectConnectorPath } from 'lib/paths';
 import ActionsContainer from 'components/Connect/Details/Actions/ActionsContainer';
 import Actions, {
   ActionsProps,
@@ -8,9 +9,6 @@ import Actions, {
 import { ConnectorState } from 'generated-sources';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ConfirmationModal, {
-  ConfirmationModalProps,
-} from 'components/common/ConfirmationModal/ConfirmationModal';
 
 const mockHistoryPush = vi.fn();
 const deleteConnector = vi.fn();
@@ -64,31 +62,6 @@ describe('Actions', () => {
     const clusterName = 'my-cluster';
     const connectName = 'my-connect';
     const connectorName = 'my-connector';
-
-    const confirmationModal = (props: Partial<ConfirmationModalProps> = {}) => (
-      <WithRoute path={pathname}>
-        <ConfirmationModal
-          onCancel={cancelMock}
-          onConfirm={() =>
-            deleteConnector(clusterName, connectName, connectorName)
-          }
-          {...props}
-        >
-          <button type="button" onClick={cancelMock}>
-            Cancel
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              deleteConnector(clusterName, connectName, connectorName);
-              mockHistoryPush(clusterConnectorsPath(clusterName));
-            }}
-          >
-            Confirm
-          </button>
-        </ConfirmationModal>
-      </WithRoute>
-    );
 
     const component = (props: Partial<ActionsProps> = {}) => (
       <WithRoute path={pathname}>
@@ -165,51 +138,9 @@ describe('Actions', () => {
         ],
       });
       userEvent.click(screen.getByRole('button', { name: 'Delete' }));
-
       expect(
         screen.getByText(/Are you sure you want to remove/i)
-      ).toHaveAttribute('isopen', 'true');
-    });
-
-    it('closes when cancel button clicked', () => {
-      render(confirmationModal({ isOpen: true }), {
-        initialEntries: [
-          clusterConnectConnectorPath(clusterName, connectName, connectorName),
-        ],
-      });
-      const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
-      userEvent.click(cancelBtn);
-      expect(cancelMock).toHaveBeenCalledTimes(1);
-    });
-
-    it('calls deleteConnector when confirm button clicked', () => {
-      render(confirmationModal({ isOpen: true }), {
-        initialEntries: [
-          clusterConnectConnectorPath(clusterName, connectName, connectorName),
-        ],
-      });
-      const confirmBtn = screen.getByRole('button', { name: 'Confirm' });
-      userEvent.click(confirmBtn);
-      expect(deleteConnector).toHaveBeenCalledTimes(1);
-      expect(deleteConnector).toHaveBeenCalledWith(
-        clusterName,
-        connectName,
-        connectorName
-      );
-    });
-
-    it('redirects after delete', async () => {
-      render(confirmationModal({ isOpen: true }), {
-        initialEntries: [
-          clusterConnectConnectorPath(clusterName, connectName, connectorName),
-        ],
-      });
-      const confirmBtn = screen.getByRole('button', { name: 'Confirm' });
-      userEvent.click(confirmBtn);
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith(
-        clusterConnectorsPath(clusterName)
-      );
+      ).toBeInTheDocument();
     });
 
     it('calls restartConnector when restart button clicked', () => {

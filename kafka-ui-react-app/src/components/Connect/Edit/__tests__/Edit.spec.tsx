@@ -14,10 +14,12 @@ vi.mock('components/common/PageLoader/PageLoader', () => 'mock-PageLoader');
 vi.mock('components/common/Editor/Editor', () => 'mock-Editor');
 
 const mockHistoryPush = vi.fn();
-vi.mock('react-router-dom', () => ({
-  ...vi.importActual('react-router-dom'),
-  useNavigate: () => mockHistoryPush,
-}));
+vi.mock('react-router-dom', async () => {
+  const actual: Record<string, string> = await vi.importActual(
+    'react-router-dom'
+  );
+  return { ...actual, useNavigate: () => mockHistoryPush };
+});
 
 describe('Edit', () => {
   const pathname = clusterConnectConnectorEditPath();

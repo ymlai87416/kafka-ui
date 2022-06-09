@@ -1,4 +1,4 @@
-import fetchMock from 'fetch-mock-jest';
+import fetchMock from 'fetch-mock';
 import reducer, { fetchClusters } from 'redux/reducers/clusters/clustersSlice';
 import mockStoreCreator from 'redux/store/configureStore/mockStoreCreator';
 

@@ -30,10 +30,12 @@ vi.mock('components/Topics/Topic/SendMessage/validateMessage', () => ({
 }));
 
 const mockNavigate = vi.fn();
-vi.mock('react-router-dom', () => ({
-  ...vi.importActual('react-router-dom'),
-  useNavigate: () => mockNavigate,
-}));
+vi.mock('react-router-dom', async () => {
+  const actual: Record<string, string> = await vi.importActual(
+    'react-router-dom'
+  );
+  return { ...actual, useNavigate: () => mockNavigate };
+});
 
 const clusterName = 'testCluster';
 const topicName = externalTopicPayload.name;

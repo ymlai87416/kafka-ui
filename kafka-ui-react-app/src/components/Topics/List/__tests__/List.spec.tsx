@@ -9,13 +9,14 @@ import { externalTopicPayload } from 'redux/reducers/topics/__test__/fixtures';
 import { CleanUpPolicy, SortOrder } from 'generated-sources';
 import userEvent from '@testing-library/user-event';
 import { clusterTopicsPath } from 'lib/paths';
-import { MockedFunction } from 'vitest';
 
 const mockNavigate = vi.fn();
-vi.mock('react-router-dom', () => ({
-  ...vi.importActual('react-router-dom'),
-  useNavigate: () => mockNavigate,
-}));
+vi.mock('react-router-dom', async () => {
+  const actual: Record<string, string> = await vi.importActual(
+    'react-router-dom'
+  );
+  return { ...actual, useNavigate: () => mockNavigate };
+});
 
 describe('List', () => {
   afterEach(() => {
@@ -85,12 +86,12 @@ describe('List', () => {
       expect(screen.getByText(/add a topic/i)).toBeInTheDocument();
     });
 
-    it('calls setTopicsSearch on input', async () => {
+    it.only('calls setTopicsSearch on input', async () => {
       const setTopicsSearch = vi.fn();
       renderComponentWithProviders({}, { setTopicsSearch });
       const query = 'topic';
       const searchElement = screen.getByPlaceholderText('Search by Topic Name');
-      userEvent.type(searchElement, query);
+      await act(() => userEvent.type(searchElement, query));
       await waitFor(() => {
         expect(setTopicsSearch).toHaveBeenCalledWith(query);
       });
@@ -346,8 +347,8 @@ describe('List', () => {
 
       userEvent.click(actionBtn);
 
-      let textBtn;
-      let mock: MockedFunction<any>;
+      let textBtn = 'Recreate Topic';
+      let mock = mockRecreate;
 
       if (action === 'clearTopicsMessages') {
         textBtn = 'Clear Messages';
@@ -355,9 +356,6 @@ describe('List', () => {
       } else if (action === 'deleteTopics') {
         textBtn = 'Remove Topic';
         mock = mockDeleteTopic;
-      } else {
-        textBtn = 'Recreate Topic';
-        mock = mockRecreate;
       }
 
       const ourAction = screen.getByText(textBtn);

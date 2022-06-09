@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { EventHandler, TextareaHTMLAttributes } from 'react';
 import { render, WithRoute } from 'lib/testHelpers';
 import {
   clusterConnectConnectorPath,
@@ -8,23 +8,17 @@ import New, { NewProps } from 'components/Connect/New/New';
 import { connects, connector } from 'redux/reducers/connect/__test__/fixtures';
 import { fireEvent, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ControllerRenderProps } from 'react-hook-form';
 
 vi.mock('components/common/PageLoader/PageLoader', () => ({
   default: () => 'mock-PageLoader',
 }));
-vi.mock('components/common/Editor/Editor', () => ({
-  default: (props: ControllerRenderProps) => {
-    return <textarea {...props} placeholder="json" />;
-  },
-}));
 
-const mockHistoryPush = vi.fn();
+const navigateMock = vi.fn();
 vi.mock('react-router-dom', async () => {
   const actual: Record<string, string> = await vi.importActual(
     'react-router-dom'
   );
-  return { ...actual, useNavigate: () => mockHistoryPush };
+  return { ...actual, useNavigate: () => navigateMock };
 });
 
 const useDispatchMock = vi.fn(() => ({
@@ -36,23 +30,25 @@ vi.mock('redux', async () => {
   return { ...actual, useDispatch: useDispatchMock };
 });
 
+beforeEach(() => {
+  vi.resetAllMocks();
+});
+
 describe('New', () => {
   const clusterName = 'my-cluster';
   const simulateFormSubmit = async () => {
-    await act(() => {
-      userEvent.type(
-        screen.getByPlaceholderText('Connector Name'),
-        'my-connector'
-      );
-      userEvent.type(
-        screen.getByPlaceholderText('json'),
-        '{"class":"MyClass"}'.replace(/[{[]/g, '$&$&')
-      );
-    });
+    const nameFiled = screen.getByPlaceholderText('Connector Name');
+    const jsonFiled = screen.getAllByRole('textbox')[1];
 
-    expect(screen.getByPlaceholderText('json')).toHaveValue(
-      '{"class":"MyClass"}'
+    await act(() => userEvent.type(nameFiled, 'my-connector'));
+    expect(nameFiled).toHaveValue('my-connector');
+
+    await act(() =>
+      userEvent.paste(jsonFiled, 'data'.replace(/[{[]/g, '$&$&'))
     );
+    expect(jsonFiled);
+
+    expect(screen.getByText('Submit1')).toBeEnabled();
     await act(() => {
       fireEvent.submit(screen.getByRole('form'));
     });
@@ -93,10 +89,10 @@ describe('New', () => {
       connector.name
     );
     renderComponent();
-
     await simulateFormSubmit();
-    expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-    expect(mockHistoryPush).toHaveBeenCalledWith(route);
+
+    expect(navigateMock).toHaveBeenCalledTimes(1);
+    expect(navigateMock).toHaveBeenCalledWith(route);
   });
 
   it('does not redirect to connector details view on unsuccessful submit', async () => {
@@ -111,6 +107,6 @@ describe('New', () => {
     });
     renderComponent();
     await simulateFormSubmit();
-    expect(mockHistoryPush).not.toHaveBeenCalled();
+    expect(navigateMock).not.toHaveBeenCalled();
   });
 });

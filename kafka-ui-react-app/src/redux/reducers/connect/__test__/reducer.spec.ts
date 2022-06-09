@@ -19,7 +19,7 @@ import reducer, {
   resumeConnector,
   restartConnectorTask,
 } from 'redux/reducers/connect/connectSlice';
-import fetchMock from 'fetch-mock-jest';
+import fetchMock from 'fetch-mock';
 import mockStoreCreator from 'redux/store/configureStore/mockStoreCreator';
 import { getTypeAndPayload, getAlertActions } from 'lib/testHelpers';
 
@@ -223,6 +223,8 @@ describe('Connect slice', () => {
     const connectName = 'first';
     const connectorName = 'hdfs-source-connector';
     const taskId = 10;
+
+    beforeEach(() => store.clearActions());
 
     describe('Thunks', () => {
       afterEach(() => {

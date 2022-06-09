@@ -5,7 +5,6 @@ import configureStore from 'redux-mock-store';
 import { RootState } from 'redux/interfaces';
 import * as redux from 'react-redux';
 import { act, screen, waitFor } from '@testing-library/react';
-import fetchMock from 'fetch-mock-jest';
 import {
   clusterTopicCopyPath,
   clusterTopicNewPath,
@@ -25,10 +24,13 @@ const initialState: Partial<RootState> = {};
 const storeMock = mockStore(initialState);
 
 const mockNavigate = vi.fn();
-vi.mock('react-router-dom', () => ({
-  ...vi.importActual('react-router-dom'),
-  useNavigate: () => mockNavigate,
-}));
+
+vi.mock('react-router-dom', async () => {
+  const actual: Record<string, string> = await vi.importActual(
+    'react-router-dom'
+  );
+  return { ...actual, useNavigate: () => mockNavigate };
+});
 
 const renderComponent = (path: string, store = storeMock) => {
   render(
@@ -58,10 +60,6 @@ const renderComponent = (path: string, store = storeMock) => {
 };
 
 describe('New', () => {
-  beforeEach(() => {
-    fetchMock.reset();
-  });
-
   afterEach(() => {
     mockNavigate.mockClear();
   });
@@ -93,11 +91,13 @@ describe('New', () => {
   });
 
   it('submits valid form', async () => {
-    const useDispatchSpy = vi.spyOn(redux, 'useDispatch');
     const useDispatchMock = vi.fn(() => ({
       meta: { requestStatus: 'fulfilled' },
     }));
-    useDispatchSpy.mockReturnValue(useDispatchMock);
+    vi.mock('redux', async () => {
+      const actual: Record<string, string> = await vi.importActual('redux');
+      return { ...actual, useDispatch: useDispatchMock };
+    });
 
     await act(() => renderComponent(clusterTopicNewPath(clusterName)));
 
@@ -110,12 +110,14 @@ describe('New', () => {
   });
 
   it('does not redirect page when request is not fulfilled', async () => {
-    const useDispatchSpy = vi.spyOn(redux, 'useDispatch');
     const useDispatchMock = vi.fn(() => ({
       meta: { requestStatus: 'pending' },
     }));
+    vi.mock('redux', async () => {
+      const actual: Record<string, string> = await vi.importActual('redux');
+      return { ...actual, useDispatch: useDispatchMock };
+    });
 
-    useDispatchSpy.mockReturnValue(useDispatchMock);
     await act(() => renderComponent(clusterTopicNewPath(clusterName)));
     await act(() =>
       userEvent.type(screen.getByPlaceholderText('Topic Name'), topicName)
@@ -125,9 +127,11 @@ describe('New', () => {
   });
 
   it('submits valid form that result in an error', async () => {
-    const useDispatchSpy = vi.spyOn(redux, 'useDispatch');
     const useDispatchMock = vi.fn();
-    useDispatchSpy.mockReturnValue(useDispatchMock);
+    vi.mock('redux', async () => {
+      const actual: Record<string, string> = await vi.importActual('redux');
+      return { ...actual, useDispatch: useDispatchMock };
+    });
 
     await act(() => renderComponent(clusterTopicNewPath(clusterName)));
     await act(() => {

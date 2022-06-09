@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => {
         reporter: ['text', 'html'],
         exclude: ['node_modules/', 'src/setupTests.ts'],
       },
+      logHeapUsage: true,
     },
   };
 

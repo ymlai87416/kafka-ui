@@ -59,7 +59,7 @@ const New: React.FC<NewProps> = ({
   const {
     handleSubmit,
     control,
-    formState: { isDirty, isSubmitting, isValid, errors },
+    formState: { isDirty, isSubmitting, isValid, errors, touchedFields },
     getValues,
     setValue,
   } = methods;
@@ -166,10 +166,12 @@ const New: React.FC<NewProps> = ({
             <ErrorMessage errors={errors} name="config" />
           </FormError>
         </div>
+        {JSON.stringify(touchedFields)}
         <Button
           buttonSize="M"
           buttonType="primary"
           type="submit"
+          name="submit"
           disabled={!isValid || isSubmitting || !isDirty}
         >
           Submit

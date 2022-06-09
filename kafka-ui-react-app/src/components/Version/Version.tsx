@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import fetch from 'node-fetch';
 import { gitCommitPath } from 'lib/paths';
 import { GIT_REPO_LATEST_RELEASE_LINK } from 'lib/constants';
 import WarningIcon from 'components/common/Icons/WarningIcon';

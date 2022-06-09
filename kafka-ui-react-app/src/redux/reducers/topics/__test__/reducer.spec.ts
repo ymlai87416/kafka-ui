@@ -26,7 +26,7 @@ import {
   createTopicResponsePayload,
 } from 'components/Topics/New/__test__/fixtures';
 import { consumerGroupPayload } from 'redux/reducers/consumerGroups/__test__/fixtures';
-import fetchMock from 'fetch-mock-jest';
+import fetchMock from 'fetch-mock';
 import mockStoreCreator from 'redux/store/configureStore/mockStoreCreator';
 import { getTypeAndPayload } from 'lib/testHelpers';
 import {
@@ -38,6 +38,7 @@ const topic = {
   name: 'topic',
   id: 'id',
 };
+const date = new Date('2019-04-07T10:20:30Z');
 
 const messageSchema = {
   key: {
@@ -368,18 +369,18 @@ describe('topics Slice', () => {
   describe('Thunks', () => {
     const store = mockStoreCreator;
     const topicName = topic.name;
-    const RealDate = Date.now;
 
     beforeAll(() => {
-      global.Date.now = vi.fn(() => new Date('2019-04-07T10:20:30Z').getTime());
+      vi.useFakeTimers();
+      vi.setSystemTime(date);
     });
     afterAll(() => {
-      global.Date.now = RealDate;
+      vi.useRealTimers();
     });
-    afterEach(() => {
-      fetchMock.restore();
-      store.clearActions();
-    });
+    afterEach(() => fetchMock.restore());
+
+    beforeEach(() => store.clearActions());
+
     describe('fetchTopicsList', () => {
       const topicResponse = {
         pageCount: 1,
@@ -509,11 +510,11 @@ describe('topics Slice', () => {
               id: 'message-topic-local',
               title: '',
               type: 'success',
-              createdAt: global.Date.now(),
+              createdAt: date.getTime(),
               message: 'Topic successfully deleted!',
             },
           },
-          { type: showSuccessAlert.fulfilled.type },
+          { type: showSuccessAlert.fulfilled.type, payload: date.getTime() },
           {
             type: deleteTopic.fulfilled.type,
             payload: { topicName },
@@ -590,11 +591,11 @@ describe('topics Slice', () => {
               id: 'message-topic-local',
               title: '',
               type: 'success',
-              createdAt: global.Date.now(),
+              createdAt: date.getTime(),
               message: 'Topic successfully recreated!',
             },
           },
-          { type: showSuccessAlert.fulfilled.type },
+          { type: showSuccessAlert.fulfilled.type, payload: date.getTime() },
           {
             type: recreateTopic.fulfilled.type,
             payload: { [topicName]: { ...recreateResponse } },
@@ -715,12 +716,12 @@ describe('topics Slice', () => {
               id: 'message-topic-local-1',
               title: '',
               type: 'success',
-              createdAt: global.Date.now(),
+              createdAt: date.getTime(),
               message: 'Number of partitions successfully increased!',
             },
           },
           { type: fetchTopicDetails.pending.type },
-          { type: showSuccessAlert.fulfilled.type },
+          { type: showSuccessAlert.fulfilled.type, payload: date.getTime() },
           {
             type: updateTopicPartitionsCount.fulfilled.type,
           },

@@ -7,11 +7,17 @@ import { render } from 'lib/testHelpers';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-vi.mock('react-hook-form', () => ({
-  useFormContext: () => ({
-    register: vi.fn(),
-  }),
-}));
+vi.mock('react-hook-form', async () => {
+  const actual: Record<string, string> = await vi.importActual(
+    'react-hook-form'
+  );
+  return {
+    ...actual,
+    useFormContext: () => ({
+      register: vi.fn(),
+    }),
+  };
+});
 
 const options: Array<SelectOption> = [
   { label: 'test-label1', value: 'test-value1', disabled: false },

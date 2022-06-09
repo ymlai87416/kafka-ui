@@ -48,24 +48,16 @@ describe('Diff', () => {
         areVersionsFetched: true,
         versions,
       });
-      expect(screen.getAllByText('Version 3').length).toEqual(4);
+      expect(screen.getAllByRole('listbox').length).toEqual(2);
     });
   });
 
-  describe('View', () => {
-    setupComponent({
-      areVersionsFetched: true,
-      versions,
-    });
-  });
   describe('when page with schema versions is loading', () => {
-    beforeAll(() => {
+    it('renders PageLoader', () => {
       setupComponent({
         areVersionsFetched: false,
         versions: [],
       });
-    });
-    it('renders PageLoader', () => {
       expect(screen.getByRole('progressbar')).toBeInTheDocument();
     });
   });
